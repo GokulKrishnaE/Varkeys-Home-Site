@@ -1,0 +1,17 @@
+{
+  "editor.formatOnSave": true,
+  "editor.wordWrap": "off",
+  // Use VS Code's own HTML formatter
+  "[html]": {
+    "editor.defaultFormatter": "vscode.html-language-features"
+  },
+  // Absolutely no HTML wrapping
+  "html.format.wrapLineLength": 0,
+  "html.format.wrapAttributes": "auto", // never force multi-line
+  "html.format.preserveNewLines": true,
+  "html.format.endWithNewline": false,
+  // (Optional) Angular templates sometimes respect HTML settings via [html]
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  }
+}

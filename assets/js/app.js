@@ -101,3 +101,43 @@ $(document).ajaxStop(function () {
     }
   });
 });
+
+$(document).ready(function () {
+
+  // Select ALL elements inside body
+  var elements = $("body .section, body img:not(.overlayBg), body h1, body h2, body h3, body p:not(.noAnim)");
+
+  // Initial hidden styles
+  elements.css({
+    opacity: 0,
+    transform: "translateY(20px)",
+    transition: "opacity 0.6s ease, transform 0.6s ease"
+  });
+
+  function checkVisibility() {
+    var windowBottom = $(window).scrollTop() + $(window).height();
+
+    elements.each(function () {
+      var $el = $(this);
+
+      // already animated → skip
+      if ($el.data("visible")) return;
+
+      // element top position
+      var elTop = $el.offset().top;
+
+      if (windowBottom > elTop + 50) {
+        $el.css({
+          opacity: 1,
+          transform: "translateY(0)"
+        });
+
+        $el.data("visible", true);
+      }
+    });
+  }
+
+  // Run on scroll + initial
+  $(window).on("scroll", checkVisibility);
+  checkVisibility();
+});

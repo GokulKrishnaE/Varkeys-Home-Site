@@ -50,7 +50,7 @@ bannerObserver.observe(bannerSection);
 
 
 // sliders
-new Swiper('.hero-slider', {
+new Swiper('.heroBannerSlider', {
     speed: 400,
     loop: true,
     autoplay: {
@@ -100,6 +100,15 @@ $(document).ajaxStop(function () {
       $('header').removeClass('header-sticky');
     }
   });
+
+  $('.subMenuToggle').hover(
+    function () {     // mouseenter
+      $(this).find('.subMenu').stop(true, true).slideDown(200);
+    },
+    function () {     // mouseleave
+      $(this).find('.subMenu').stop(true, true).slideUp(200);
+    }
+  );
 });
 
 $(document).ready(function () {

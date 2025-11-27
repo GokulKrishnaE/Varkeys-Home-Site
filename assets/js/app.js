@@ -79,6 +79,7 @@ $(document).ajaxStop(function () {
   var $btn = $('#scrollTopButton');
 
   $('.navbar-toggler').click(function () {
+    $(this).find('i').toggleClass('fa-xmark');
     $('.navbar-collapse').toggleClass('show');
   })
 

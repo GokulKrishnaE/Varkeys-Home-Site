@@ -1,6 +1,6 @@
 // include html
 let includes = $('[data-include]')
-jQuery.each(includes, function(){
+jQuery.each(includes, function () {
   let html = '/' + $(this).data('include') + '.html'
   $(this).load(html)
 })
@@ -17,11 +17,11 @@ const observer = new IntersectionObserver((entries, observer) => {
   entries.forEach(entry => {
     const items = entry.target.querySelectorAll('.section-title,.subhead,.roomWrapper');
     if (entry.isIntersecting) {
-      items.forEach(item=>{
+      items.forEach(item => {
         item.classList.add('visible');
       })
     } else {
-      items.forEach(item=>{
+      items.forEach(item => {
         item.classList.remove('visible');
       })
     }
@@ -31,12 +31,12 @@ const bannerObserver = new IntersectionObserver((entries, observer) => {
   entries.forEach(entry => {
     const bannerTitle = entry.target.querySelectorAll('h1');
     if (entry.isIntersecting) {
-      bannerTitle.forEach(banner=>{
+      bannerTitle.forEach(banner => {
         banner.classList.add('visible');
       })
-    } 
+    }
     else {
-      bannerTitle.forEach(banner=>{
+      bannerTitle.forEach(banner => {
         banner.classList.remove('visible');
       })
     }
@@ -51,23 +51,23 @@ bannerObserver.observe(bannerSection);
 
 // sliders
 new Swiper('.heroBannerSlider', {
-    speed: 400,
-    loop: true,
-    autoplay: {
-      delay: 5000,
-      disableOnInteraction: false
-    },
-    slidesPerView: 1,
-    pagination: false
-  });
+  speed: 400,
+  loop: true,
+  autoplay: {
+    delay: 5000,
+    disableOnInteraction: false
+  },
+  slidesPerView: 1,
+  pagination: false
+});
 
 new Swiper(".testimonialSlider", {
-    grabCursor: true,
-    slidesPerView: "auto",
-    pagination: {
-      el: ".swiper-pagination",
-    },
-  });
+  grabCursor: true,
+  slidesPerView: "auto",
+  pagination: {
+    el: ".swiper-pagination",
+  },
+});
 
 // $('#scrollToTop').click(function (e) {
 //   e.preventDefault();
@@ -77,6 +77,10 @@ new Swiper(".testimonialSlider", {
 
 $(document).ajaxStop(function () {
   var $btn = $('#scrollTopButton');
+
+  $('.navbar-toggler').click(function () {
+    $('.navbar-collapse').toggleClass('show');
+  })
 
   // Show/hide on scroll
   $(window).on('scroll', function () {
@@ -101,14 +105,47 @@ $(document).ajaxStop(function () {
     }
   });
 
+  function isMobile() {
+    return window.matchMedia("(max-width: 768px)").matches;
+  }
+
+  /* -----------------------------------
+     DESKTOP → hover to open/close
+  -----------------------------------*/
   $('.subMenuToggle').hover(
-    function () {     // mouseenter
+    function () {
+      if (isMobile()) return;        // ignore hover on mobile
       $(this).find('.subMenu').stop(true, true).slideDown(200);
     },
-    function () {     // mouseleave
+    function () {
+      if (isMobile()) return;
       $(this).find('.subMenu').stop(true, true).slideUp(200);
     }
   );
+
+  /* -----------------------------------
+     MOBILE → click main link to toggle
+  -----------------------------------*/
+  $('.subMenuToggle > a').on('click', function (e) {
+    if (!isMobile()) return;           // only run on mobile
+    e.preventDefault();                // stop the dummy link
+    e.stopPropagation();               // prevent bubbling
+
+    $(this)
+      .siblings('.subMenu')
+      .stop(true, true)
+      .slideToggle(200);
+  });
+
+
+  /* -----------------------------------
+     IMPORTANT: Allow submenu links to work
+     WITHOUT triggering parent click
+  -----------------------------------*/
+  $('.subMenu a').on('click', function (e) {
+    // stop bubbling so parent <li> doesn't react
+    e.stopPropagation();
+  });
 });
 
 $(document).ready(function () {
